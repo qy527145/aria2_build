@@ -14,8 +14,7 @@ jobs:
       run: docker build -f Dockerfile.mingw -t a2w:x64 .
     - name: Copy Exe-file
       run: 
-        docker run -d --name cpa2w a2w:x64 /bin/bash
-        docker cp cpa2w:/aria2/src/aria2c.exe .
+        docker run -d --name cpa2w a2w:x64 /bin/bash && docker cp cpa2w:/aria2/src/aria2c.exe .
     - name: Upload file
       uses: actions/upload-artifact@master
       with:
