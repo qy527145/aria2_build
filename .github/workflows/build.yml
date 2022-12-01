@@ -1,0 +1,23 @@
+name: Build Aria For Windows
+
+on: workflow_dispatch
+  
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Create docker image and build
+      run: docker build -f Dockerfile.mingw -t a2w:x64 .
+    - name: Copy Exe-file
+      run: 
+        docker run -d --name cpa2w a2w:x64 /bin/bash
+        docker cp cpa2w:/aria2/src/aria2c.exe .
+    - name: Upload file
+      uses: actions/upload-artifact@master
+      with:
+        name: aria
+        path: ./aria2c.exe
